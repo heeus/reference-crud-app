@@ -4,9 +4,7 @@ publish_testservice() {
     echo "Building test service..."
     binTestService="testservice-linux-amd64-${version}"
     binLTestService="testservice-linux-amd64-latest"
-    cd ./service
-    env GOOS=linux GOARCH=amd64 go build -o ../bin/${binTestService}
-    cd ..
+    env GOOS=linux GOARCH=amd64 go build -o ./bin/${binTestService}
     if [ -f ./bin/${binTestService} ]; then
         echo "Uploading test service..."
         env AWS_ACCESS_KEY_ID=${keyId} AWS_SECRET_ACCESS_KEY=${secretKey} aws s3 cp ./bin/${binTestService} s3://${bucket}/testservice/${binTestService}
