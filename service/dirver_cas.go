@@ -132,7 +132,7 @@ func (d *CasandraDriver) Init(args map[string]string) error {
 		return err
 	}
 
-	d.logger.Log("casandra driver initialized")
+	d.logger.Log("casandra driver initialized!")
 
 	d.logger.Debug("Cassandra hosts: %v", d.hosts)
 	d.logger.Debug("Cassandra replication factor: %v", d.replicationFactor)
