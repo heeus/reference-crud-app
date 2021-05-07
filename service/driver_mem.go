@@ -73,7 +73,7 @@ func (d *MemoryDriver) Read(r *DBRequest) *DBResponse {
 }
 
 func (d *MemoryDriver) read(partition int64, view *ViewView) (*Record, error) {
-	if partition <= 0 {
+	if partition < 0 {
 		return nil, fmt.Errorf("record partiotion number malformed")
 	}
 
@@ -158,7 +158,7 @@ func (d *MemoryDriver) Update(r *DBRequest) *DBResponse {
 }
 
 func (d *MemoryDriver) update(partition int64, view *ViewMod) error {
-	if partition <= 0 {
+	if partition < 0 {
 		return fmt.Errorf("record partiotion number malformed")
 	}
 
@@ -224,7 +224,7 @@ func (d *MemoryDriver) Delete(r *DBRequest) *DBResponse {
 }
 
 func (d *MemoryDriver) delete(partition int64, view *ViewView) error {
-	if partition <= 0 {
+	if partition < 0 {
 		return fmt.Errorf("record partiotion number malformed")
 	}
 
