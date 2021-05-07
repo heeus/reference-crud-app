@@ -169,6 +169,7 @@ func (d *CasandraDriver) Read(r *DBRequest) *DBResponse {
 		return &DBResponse{Status: 400, Error: "wrong request data"}
 	}
 
+	d.logger.Debug("Reading %d views", len(r.ViewViews))
 	if len(r.ViewViews) > 0 {
 		records = make([]*Record, len(r.ViewViews))
 
@@ -180,6 +181,7 @@ func (d *CasandraDriver) Read(r *DBRequest) *DBResponse {
 			}
 
 			if rec != nil {
+				d.logger.Debug("Returning record: ", rec)
 				records[i] = rec
 			}
 		}
@@ -196,16 +198,21 @@ func (d *CasandraDriver) read(partition int64, view *ViewView) (*Record, error) 
 	}
 
 	key, err := buildKey(view.PartitionKey, view.ClusterKey)
+	d.logger.Debug("Key built: %s", key)
 
 	if err != nil {
+		d.logger.Debug("error building key: %s", err.Error)
 		return nil, err
 	}
 
 	r, err := d.get(key, partition, view.ViewType)
 
 	if err != nil {
+		d.logger.Debug("error getting value: %s", err.Error)
 		return nil, err
 	}
+
+	d.logger.Debug("read success: ", r)
 
 	return r, nil
 }
