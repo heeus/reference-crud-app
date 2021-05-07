@@ -4,7 +4,9 @@
 
 package service
 
-import "fmt"
+import (
+	"encoding/json"
+)
 
 //DBDriver s.e.
 type DBDriver interface {
@@ -55,5 +57,9 @@ type Record struct {
 }
 
 func (r *DBResponse) stringify() []byte {
-	return []byte(fmt.Sprintf("{\"Status\":%v,\"Error\":%v}", r.Status, r.Error))
+	bytes, err := json.Marshal(r)
+	if err != nil {
+		return []byte("unable to marshal response: " + err.Error())
+	}
+	return bytes
 }
