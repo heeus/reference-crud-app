@@ -287,7 +287,6 @@ func (s *Service) handle(w http.ResponseWriter, r *http.Request) {
 
 	switch f {
 	case s.readFunc:
-		s.logger.Debug("Processing read request")
 		res = s.driver.Read(req)
 	case s.insertFunc:
 		res = s.driver.Insert(req)
